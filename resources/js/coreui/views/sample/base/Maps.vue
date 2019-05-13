@@ -13,13 +13,7 @@
       :key="index"
       v-for="(Gis,index) in Giss"
       :lat-lng="Position(Gis.latitude,Gis.longitude)"
-      :icon-size="largeIcon"
-      :icon="jnsIcon(Gis,index)"
-      @mouseover="mouseOver(Gis,index)"
-      shadowSize:   [50, 64],
-        iconAnchor:   [22, 94],
-        shadowAnchor: [4, 62],
-        popupAnchor:  [-3, -76]
+    
       >
 
       </l-marker>
@@ -45,12 +39,14 @@ export default {
       center: L.latLng(32.509762, -101.777344),
       currentZoom:3,
       currentCenter:L.latLng(47.41322, -1.219482),
-      url: "https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=e955b6c9bc0b4ec6a38495e3f90d87b5",
+      // url: "https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=e955b6c9bc0b4ec6a38495e3f90d87b5",
+      // url:'https://gitlab.com/IvanSanchez/Leaflet.GridLayer.GoogleMutant',
+      url : "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       marker: L.latLng(47.41322, -1.219482),
-      normalIcon :[35,35],
-      largeIcon :[50,50],
+      // normalIcon :[35,35],
+      // largeIcon :[50,50],
       defaultIcon: L.icon({
         // iconUrl: 'http://leafletjs.com/examples/custom-icons/leaf-green.png',
         iconUrl: jpg1,
@@ -60,13 +56,13 @@ export default {
       selectedIcon: L.icon({
         iconUrl: 'http://leafletjs.com/examples/custom-icons/leaf-red.png',
         shadowUrl: 'http://leafletjs.com/examples/custom-icons/leaf-shadow.png',
-        iconSize : [30,30]
+        // iconSize : [30,30]
       }),
     }
   },
   mounted() {
      axios
-      .get("https://api.openbrewerydb.org/breweries")
+      .get('https://api.openbrewerydb.org/breweries')
       .then(response => (this.Giss = response.data)
       .map(r=>{
         r.iconSize = [25,15];
@@ -81,7 +77,13 @@ export default {
     
   },
   watch:{
- 
+    Giss:{
+      handler :function(val){
+        console.log(val)
+      },
+      deep:true
+    }
+    
   },
   methods: {
     mouseOver(Gis,index){

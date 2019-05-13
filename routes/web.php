@@ -13,4 +13,5 @@
 
 Route::get('/{vue_capture?}', 'AppController@index')
     ->middleware(['speed'])
-    ->where('vue_capture', '[\/\w\.\,\-]*');
+    ->where('vue_capture', '[\/\w\.\,\-]*')
+    ->middleware('cors');
